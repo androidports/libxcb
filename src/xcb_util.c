@@ -228,6 +228,9 @@ static int _xcb_open(const char *host, char *protocol, const int display)
     int fd;
 #ifdef __hpux
     static const char unix_base[] = "/usr/spool/sockets/X11/";
+#elif defined(ANDROID) || defined(IPHONE)
+    const char* unix_base = getenv("UNIX_DOMAIN_SOCKET_BASE");
+    if (!unix_base) unix_base = "/tmp/.X11-unix/X";
 #else
     static const char unix_base[] = "/tmp/.X11-unix/X";
 #endif
